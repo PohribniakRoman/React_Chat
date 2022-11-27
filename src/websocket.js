@@ -9,3 +9,5 @@ const connectionOptions = {
   };
 
 const socket = io(ENDPOINTS.host,connectionOptions);
+
+export default socket;
