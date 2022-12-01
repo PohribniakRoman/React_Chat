@@ -8,12 +8,12 @@ export default function Home() {
     const navigate = useNavigate()
     useEffect(()=>{
         socket.emit("GET_ROOMS");
-        socket.on("ROOM_LIST",({rooms})=>{
+        socket.on("ROOM_LIST",({rooms})=>{ 
             console.log(rooms)
             updateRoomList(rooms)    
         })
     },[])
-    return(
+    return(  
         <div>
             {roomList.map(e=>{
                 return <div key={e} data-roomid={e} onClick={()=>{

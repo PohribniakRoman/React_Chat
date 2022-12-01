@@ -1,0 +1,36 @@
+.chat{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    &__main{
+        width: 80%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-direction: column;
+        & form{
+            border-top: 1px solid lightgray;
+            padding: 10px 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        &--text{
+            height: 30px;
+            font-size: 16x;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            width: 80%;
+            border: 1px solid lightgray;
+            background-color: #eee;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+    }
+    &__users{
+        border-left: 1px solid lightgray;
+        width: 20%;
+        height: 100%;
+    }
+}
