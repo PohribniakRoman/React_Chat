@@ -9,6 +9,43 @@
         align-items: center;
         justify-content: flex-end;
         flex-direction: column;
+        &--history{
+            font-family: 'Montserrat', sans-serif;
+            width: 100%;
+            display: flex;
+            align-content: flex-end;
+            justify-content: center;
+            flex-direction: column;
+        }
+        &--message{
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        & .my{
+            justify-content: flex-end;
+            & div{
+                background-color: lightblue;
+            }
+        }
+        &--box{
+            background-color: lightgray;
+            padding: 10px; 
+            display: inline-block;
+            border-radius: 10px;
+        }
+        &--txt{
+            display: inline-block;
+            margin-top: 5px;
+            max-width: 400px;
+        }
+        &--sender{
+            font-weight: bold;
+            &::first-letter{
+                text-transform: uppercase;
+            }
+        }
         & form{
             border-top: 1px solid lightgray;
             padding: 10px 0;
@@ -26,11 +63,46 @@
             background-color: #eee;
             border-top-left-radius: 10px;
             border-bottom-left-radius: 10px;
+            padding: 5px;
+        }
+        &--submit{
+            cursor: pointer;
+            border:1px solid lightgray;
+            border-top-right-radius:10px; 
+            border-bottom-right-radius:10px;
+            border-left: none;
+            color: rgb(109, 109, 109);
+            padding: 5px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            & svg:active{
+                transform: scale(0.98);
+            }
         }
     }
     &__users{
+        position: relative;
         border-left: 1px solid lightgray;
         width: 20%;
         height: 100%;
+        &--participant{
+            font-family: 'Montserrat', sans-serif;
+            border-bottom: 1px solid lightblue;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 10px 15px;
+        }
+    }
+    &__id{
+        position: absolute;
+        font-family: consolas;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: gray;
+        bottom: 5px;
+        right: 5px;
     }
 }

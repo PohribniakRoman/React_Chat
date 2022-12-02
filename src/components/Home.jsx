@@ -6,25 +6,32 @@ import {v4} from "uuid";
 export default function Home() {
     const [roomList,updateRoomList] = useState([]);
     const navigate = useNavigate()
+    const [participant,updatePartisipant] = useState("")
+
     useEffect(()=>{
         socket.emit("GET_ROOMS");
+        
         socket.on("ROOM_LIST",({rooms})=>{ 
-            console.log(rooms)
             updateRoomList(rooms)    
         })
     },[])
     return(  
         <div>
-            {roomList.map(e=>{
-                return <div key={e} data-roomid={e} onClick={()=>{
-                    navigate(e);
-                }}>{e}</div>
+            {roomList.map(room=>{
+                return <div key={room.id} onClick={()=>{
+                    navigate(room.id);
+                }}>{room.id} {room.sockets.length}/4</div>
             })}
-            <button onClick={()=>{
-                const roomId =v4();
-                socket.emit("CREATE_ROOM",{roomId})
+            <form onSubmit={(event)=>{
+                event.preventDefault();
+                const roomId = v4();
+                socket.emit("CREATE_ROOM",{roomId,participant})
+                localStorage.setItem("user",JSON.stringify({name:participant}))
                 navigate(roomId);
-            }}>create room</button>
+            }}>
+                <input type="text" placeholder="Enter name" name="" value={participant} onInput={(event)=>{updatePartisipant(event.target.value)}} />
+                <button type="submit">create room</button>
+            </form>
         </div>
     )
 }
