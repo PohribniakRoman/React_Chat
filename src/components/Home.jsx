@@ -7,7 +7,7 @@ export default function Home() {
     const [roomList,updateRoomList] = useState([]);
     const navigate = useNavigate()
     const [participant,updatePartisipant] = useState("")
-
+    const userName = JSON.parse(localStorage.getItem("user"));
     useEffect(()=>{
         socket.emit("GET_ROOMS");
         
@@ -25,11 +25,15 @@ export default function Home() {
             <form onSubmit={(event)=>{
                 event.preventDefault();
                 const roomId = v4();
-                socket.emit("CREATE_ROOM",{roomId,participant})
-                localStorage.setItem("user",JSON.stringify({name:participant}))
+                if(userName === null){
+                    socket.emit("CREATE_ROOM",{roomId,participant})
+                    localStorage.setItem("user",JSON.stringify({name:participant}))
+                }else{
+                    socket.emit("CREATE_ROOM",{roomId,participant:userName})
+                }
                 navigate(roomId);
             }}>
-                <input type="text" placeholder="Enter name" name="" value={participant} onInput={(event)=>{updatePartisipant(event.target.value)}} />
+                {userName != null ?<input type="text" placeholder="Enter name" name="" value={participant} onInput={(event)=>{updatePartisipant(event.target.value)}} />:""}
                 <button type="submit">create room</button>
             </form>
         </div>
