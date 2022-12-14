@@ -10,20 +10,24 @@ export default function Room() {
     const [participants,updatePartisipants] = useState([])
     const [message,updateMessage] = useState("")
     const [history,updateHistory] = useState([]);
+    const [name,setName] = useState("")
     const {roomId} = useParams();
     const navigate  = useNavigate();
 
     useEffect(()=>{
-        const user = JSON.parse(localStorage.getItem("user"));  
+        
+        const user = JSON.parse(localStorage.getItem("user"));
         if(user===null){return navigate("/")}
-
+        setName(user.name)
         socket.emit("ENTER_ROOM",{roomId,participant:user.name})
 
         socket.emit("GET_CONNECTED_SOCKETS",{roomId})
 
         socket.on("ROOM_SOCKETS",({roomParticipants})=>{
+            
             updatePartisipants(roomParticipants);
         })
+
         socket.on("MESSAGE_HISTORY",(messages)=>{
             updateHistory(messages);
         })
@@ -37,7 +41,7 @@ export default function Room() {
         }
     },[])
 
-    const {name} = JSON.parse(localStorage.getItem("user"));
+    
 
     return <section className="chat">
         <div className="chat__main">
@@ -53,7 +57,9 @@ export default function Room() {
             </div>
             <form onSubmit={(event)=>{
                 event.preventDefault();
-                socket.emit("MESSAGE",{sender:name,txt:message,roomId})
+                if(message.trim().length > 0){
+                    socket.emit("MESSAGE",{sender:name,txt:message,roomId})
+                }
                 updateMessage('');
             }}>
                 <input type="text" className="chat__main--text" onInput={(event)=>{updateMessage(event.target.value)}} value={message}/>
